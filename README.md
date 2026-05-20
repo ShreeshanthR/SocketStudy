@@ -57,37 +57,41 @@ Socket programming finds applications in various domains, including web developm
 
 ### Client
 ```python
-import socket
-from datetime import datetime
-s=socket.socket()
-s.bind(('localhost',8000))
-s.listen(5)
-c,addr=s.accept()
-print("Client Address : ",addr)
-now = datetime.now()
-c.send(now.strftime("%d/%m/%Y %H:%M:%S").encode())
-ack=c.recv(1024).decode()
-if ack:
- print(ack)
-c.close()
+import socket  
+s=socket.socket()  
+s.bind(('localhost',8000))  
+s.listen(5)  
+c,addr=s.accept() 
+while True:  
+    i=input("Enter a data: ") 
+    c.send(i.encode())  
+    ack=c.recv(1024).decode()  
+    if ack: 
+        print(ack)  
+        continue  
+    else:  
+        c.close()  
+        break
 ```
 
 ### Server
 ```python
-import socket
-s=socket.socket()
-s.connect(('localhost',8000))
-print(s.getsockname())
-print(s.recv(1024).decode())
-s.send("acknowledgement recived from the server".encode())
+import socket 
+s=socket.socket()  
+s.connect(('localhost',8000))  
+while True:  
+    print(s.recv(1024).decode()) 
+    s.send("Acknowledgement Recived".encode())
 ```
 
 ## Output
 
 ### Client
-![image](https://github.com/user-attachments/assets/fedec95a-76cf-4a3d-a4d4-7ed2c1e4cdc8)
+<img width="636" height="314" alt="image" src="https://github.com/user-attachments/assets/79843b96-68f5-48c6-95ed-66144f63cbff" />
+
 ### Server
-![image](https://github.com/user-attachments/assets/69ce2478-3af0-4b79-9d5f-27d3d4975d10)
+<img width="601" height="273" alt="image" src="https://github.com/user-attachments/assets/1eadd618-b1ae-456c-8abf-887ebefe6fbf" />
+
 
 ## Result:
 Thus the study of Socket Programming Completed Successfully
